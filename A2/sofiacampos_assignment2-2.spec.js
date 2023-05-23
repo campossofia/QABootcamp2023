@@ -23,8 +23,11 @@ describe('Test made by Sofia Campos to test log in, create a bank account and lo
 
     cy.getBySel('bankaccount-submit').click()
 
-    cy.get('[data-test="bankaccount-list"]').get('li').find(`:contains(${bankAccountInfo.name})`).find ('[data-test="bankaccount-delete"]').click()
+    cy.getBySel('bankaccount-list').should('contain', bankAccountInfo.name)
 
+    //delete section
+    cy.get('[data-test="bankaccount-list"]').get('li').find(`:contains(${bankAccountInfo.name})`).find ('[data-test="bankaccount-delete"]').click()
+    cy.getBySel('bankaccount-list').should('contain', `${bankAccountInfo.name} (Deleted)`)
 
     cy.getBySel("sidenav-signout").click()
     cy.location("pathname").should("eq", "/signin")
